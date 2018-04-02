@@ -70,6 +70,8 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     _floatingLabelShowAnimationDuration = kFloatingLabelShowAnimationDuration;
     _floatingLabelHideAnimationDuration = kFloatingLabelHideAnimationDuration;
     [self setFloatingLabelText:self.placeholder];
+    
+    _floatingString = nil;
 
     _adjustsClearButtonRect = YES;
     _isFloatingLabelFontDefault = YES;
@@ -202,6 +204,15 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     [self setNeedsLayout];
 }
 
+-(void)setFloatingString:(NSString *)floatingString {
+    _floatingString= floatingString;
+    if (!_floatingString) {
+        [self setFloatingLabelText:self.placeholder];
+    } else {
+        [self setFloatingLabelText:_floatingString];
+    }
+}
+
 #pragma mark - UITextField
 
 - (void)setFont:(UIFont *)font
@@ -245,25 +256,33 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [self setCorrectPlaceholder:placeholder];
-    [self setFloatingLabelText:placeholder];
+    
+    if (!_floatingString) {
+        [self setFloatingLabelText:placeholder];
+    }
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder
 {
     [super setAttributedPlaceholder:attributedPlaceholder];
-    [self setFloatingLabelText:attributedPlaceholder.string];
+    if (!_floatingString) {
+        [self setFloatingLabelText:attributedPlaceholder.string];
+    }
     [self updateDefaultFloatingLabelFont];
 }
 
 - (void)setPlaceholder:(NSString *)placeholder floatingTitle:(NSString *)floatingTitle
 {
     [self setCorrectPlaceholder:placeholder];
+    
+    _floatingString = floatingTitle;
     [self setFloatingLabelText:floatingTitle];
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder floatingTitle:(NSString *)floatingTitle
 {
     [super setAttributedPlaceholder:attributedPlaceholder];
+    _floatingString = floatingTitle;
     [self setFloatingLabelText:floatingTitle];
 }
 

@@ -128,6 +128,12 @@ IB_DESIGNABLE
  */
 @property (nonatomic, assign) BOOL alwaysShowFloatingLabel;
 
+
+/**
+ The string to display in the floating label, if nil or empty, will use the placeholder.
+ */
+@property (copy, nonatomic) NSString *floatingString;
+
 /**
  * Color of the placeholder
  */
